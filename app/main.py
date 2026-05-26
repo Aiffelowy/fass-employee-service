@@ -15,11 +15,22 @@ from app.schemas import EmployeeCreate, EmployeeHierarchyResponse, EmployeeRespo
 consumer = KafkaEventConsumer();
 
 @asynccontextmanager
-async def lifespan(_: FastAPI):
+async def lifespan(app: FastAPI):
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all);
     
-    await kafka_producer.start();
+    max_retries = 5;
+    for i in range(max_retries):
+        try:
+            await kafka_producer.start();
+            print("Successfully connected to kafka");
+            break;
+        except Exception as e:
+            if i == max_retries - 1:
+                raise e;
+            print(f"No connection to kafka, retrying: {i+1}/{max_retries}");
+            await asyncio.sleep(5);
+
     consumer_task = asyncio.create_task(consumer.start());
     
     yield;
