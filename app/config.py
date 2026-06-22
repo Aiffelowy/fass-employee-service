@@ -4,8 +4,8 @@ class Settings(BaseSettings):
     APP_NAME: str = "employee-service";
 
     KAFKA_BOOTSTRAP_SERVERS: str = "kafka:9092";
-    KAFKA_CONSUME_TOPIC: str = "auth-events";
-    KAFKA_PRODUCE_TOPIC: str = "employee-events";
+    KAFKA_CONSUME_TOPIC: str = "employee.account-activated,employee.activation-expired"
+    KAFKA_PRODUCE_TOPIC: str = "employee.profile-created";
     KAFKA_GROUP_ID: str = "employee-service-group";
 
     POSTGRES_USER: str

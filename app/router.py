@@ -16,9 +16,9 @@ async def handle_activation_expired(event):
         await session.commit();
 
 EVENT_HANDLER_MAP = {
-    "EmployeeAccountActivated": handle_account_activated,
-    "EmployeeActivationExpired": handle_activation_expired,
-};
+    "employee.account-activated": handle_account_activated,
+    "employee.activation-expired": handle_activation_expired,
+}
 
 async def route_event(event):
     handler = EVENT_HANDLER_MAP.get(event.event_type);
