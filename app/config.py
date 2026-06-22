@@ -8,17 +8,10 @@ class Settings(BaseSettings):
     KAFKA_PRODUCE_TOPIC: str = "employee.profile-created";
     KAFKA_GROUP_ID: str = "employee-service-group";
 
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str
-    POSTGRES_HOST: str = "postgres"
-    POSTGRES_PORT: int = 5432
-
-    @property
-    def DATABASE_URL(self) -> str:
-        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+    DATABASE_URL :str;
 
     class Config:
         env_file = ".env";
+        extra = "ignore";
 
 settings = Settings();
